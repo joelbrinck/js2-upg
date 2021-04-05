@@ -67,16 +67,15 @@ export default {
       commit('REMOVE_FROM_CART', item)
     },
     saveCart: ({ commit }, cart) => {
-      axios.post('/carts/new', cart)
+      axios.post('/carts/new', cart, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
         .then(res => {
           if(res.status === 201) {
-            console.log(res)
             commit('SAVE_CART', cart)
           }
         })
     },
     getCarts: ({ commit }) => {
-      axios.get('/carts', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token')} })
+      axios.get('/carts', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } })
         .then(res => {
           commit('SET_CARTS', res.data)
         })
